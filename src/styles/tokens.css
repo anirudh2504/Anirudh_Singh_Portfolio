@@ -8,31 +8,32 @@
 
 /* ---------- base = Glassmorphism, dark ---------- */
 :root {
-  --ground: #0b0f17;
+  --ground: #0a0e1a;
   --ground-img: none;
   --ground-size: auto;
-  --wall: radial-gradient(60% 50% at 12% 8%, rgba(45,212,191,.32), transparent 60%),
-          radial-gradient(50% 40% at 88% 18%, rgba(251,113,133,.26), transparent 60%),
-          radial-gradient(60% 50% at 50% 105%, rgba(99,102,241,.28), transparent 60%);
-  --text: #e8edf5;
-  --muted: #8f9bb0;
+  --wall: radial-gradient(48% 38% at 8% -4%, rgba(45,212,191,.20), transparent 62%),
+          radial-gradient(40% 34% at 96% 6%, rgba(251,113,133,.14), transparent 62%),
+          radial-gradient(55% 42% at 50% 110%, rgba(99,102,241,.20), transparent 62%),
+          linear-gradient(#0a0e1a, #0b0f17);
+  --text: #eaeef6;
+  --muted: #98a2b8;
   --accent: #2dd4bf;
   --accent-2: #fb7185;
   --accent-ink: #06201d;
   --sh-dark: #000;
   --sh-light: #fff;
-  --panel: rgba(255,255,255,.06);
-  --panel-border: rgba(255,255,255,.14);
+  --panel: rgba(255,255,255,.05);
+  --panel-border: rgba(255,255,255,.11);
   --bw: 1px;
-  --sh-out: 0 20px 50px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.12);
-  --sh-out-sm: 0 8px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.12);
+  --sh-out: 0 24px 60px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.09);
+  --sh-out-sm: 0 8px 24px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.09);
   --sh-in: inset 0 2px 8px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.1);
   --sh-in-sm: inset 0 1px 4px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.1);
   --btn-shadow: 0 10px 30px rgba(45,212,191,.25);
   --blur: 20px;
   --sat: 150%;
-  --blob-opacity: .28;
-  --r: 24px;
+  --blob-opacity: .16;
+  --r: 22px;
   --r-sm: 14px;
   --r-pill: 999px;
   --chip: rgba(255,255,255,.07);
@@ -43,17 +44,18 @@
   --h-transform: none;
   --h-shadow: none;
   --art-filter: none;
-  --h-weight: 800;
-  --font-display: "Syne", "Avenir Next", "Segoe UI", sans-serif;
+  --h-weight: 700;
+  --font-display: "Plus Jakarta Sans", "Segoe UI", "Helvetica Neue", sans-serif;
   --font-body: "Manrope", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
   color-scheme: dark;
 }
 :root[data-theme="light"] {
   --ground: #eef1f8;
-  --wall: radial-gradient(60% 50% at 12% 8%, rgba(45,212,191,.45), transparent 60%),
-          radial-gradient(50% 40% at 88% 18%, rgba(251,113,133,.35), transparent 60%),
-          radial-gradient(60% 50% at 50% 105%, rgba(99,102,241,.3), transparent 60%);
+  --wall: radial-gradient(48% 38% at 8% -4%, rgba(45,212,191,.32), transparent 62%),
+          radial-gradient(40% 34% at 96% 6%, rgba(251,113,133,.22), transparent 62%),
+          radial-gradient(55% 42% at 50% 110%, rgba(99,102,241,.22), transparent 62%),
+          linear-gradient(#f2f4fa, #eef1f8);
   --text: #101828; --muted: #5b6478; --accent: #0d9488; --accent-2: #e11d48; --accent-ink: #fff;
   --panel: rgba(255,255,255,.55); --panel-border: rgba(255,255,255,.85);
   --sh-out: 0 18px 48px rgba(30,40,90,.14), inset 0 1px 0 rgba(255,255,255,.9);
@@ -63,7 +65,7 @@
   --btn-shadow: 0 10px 30px rgba(13,148,136,.3);
   --chip: rgba(255,255,255,.6); --line: rgba(16,24,40,.08);
   --pop-1: rgba(45,212,191,.18); --pop-2: rgba(251,113,133,.16); --pop-3: rgba(99,102,241,.16);
-  --blob-opacity: .32;
+  --blob-opacity: .2;
   color-scheme: light;
 }
 
@@ -83,7 +85,7 @@
   --chip: var(--ground); --line: rgba(255,255,255,.06);
   --pop-1: var(--ground); --pop-2: var(--ground); --pop-3: var(--ground);
   --h-transform: none; --h-shadow: none; --art-filter: none; --h-weight: 800;
-  --font-display: "Syne", "Avenir Next", sans-serif; --font-body: "Manrope", Arial, sans-serif; --font-mono: "JetBrains Mono", Consolas, monospace;
+  --font-display: "Plus Jakarta Sans", "Segoe UI", sans-serif; --font-body: "Manrope", Arial, sans-serif; --font-mono: "JetBrains Mono", Consolas, monospace;
 }
 :root[data-theme="light"][data-style="neu"] {
   --ground: #e3e7ef; --text: #23273a; --muted: #6d7488; --accent: #0d9488; --accent-2: #e11d48; --accent-ink: #fff;

@@ -8,7 +8,7 @@ export const profile = {
   headline: { before: 'I build ', em: 'scalable', after: ' web products, end to end.' },
   intro:
     'Full Stack Developer at Affluence Digital Solutions. I work across the MERN stack and Java — shipping modular React front-ends, Node/Express APIs, Shopify integrations and AWS Lambda automations. Strong fundamentals, and a habit of learning whatever the problem needs.',
-  education_short: 'B.Tech CSE · GJUS&T, Hisar',
+  education_short: 'B.Tech CSE · GJUS&T',
   availability: 'Open to work',
   email: 'anirajput20022@gmail.com',
   phone: { display: '+91 83989 93306', href: 'tel:+918398993306' },
