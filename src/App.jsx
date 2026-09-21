@@ -8,8 +8,10 @@ import Education from './components/sections/Education'
 import Contact from './components/sections/Contact'
 import Footer from './components/Footer'
 import StyleDock from './components/StyleDock'
+import { useReveal } from './hooks/useReveal'
 
 export default function App() {
+  useReveal()
   return (
     <>
       <Backdrop />
