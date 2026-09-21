@@ -1,15 +1,22 @@
 import { profile } from '../data/profile'
 import { DownloadIcon, GitHubIcon, LinkedInIcon } from './Icons'
+import { useTilt } from '../hooks/useTilt'
+import RotatingWord from './ui/RotatingWord'
 
 const Str = ({ v }) => <span className="s">&quot;{v}&quot;</span>
 const Key = ({ k }) => <span className="k">&quot;{k}&quot;</span>
 
 function ProfileCard() {
   const { card } = profile
+  const tiltRef = useTilt(9)
   const firstRow = card.stack.slice(0, 3)
   const secondRow = card.stack.slice(3)
   return (
-    <aside className="id-card panel" aria-label="Profile summary">
+    <aside className="id-card" aria-label="Profile summary" ref={tiltRef}>
+      {/* 3D stack: slab (thickness) → glass face → content layers floating above it */}
+      <div className="id-card-edge" aria-hidden="true" />
+      <div className="id-card-face panel" aria-hidden="true" />
+      <div className="id-card-content">
       <div className="id-head">
         <div className="avatar" aria-hidden="true" data-initials={profile.initials} />
         <div>
@@ -34,6 +41,7 @@ function ProfileCard() {
       <div className="tools">
         {profile.tools.map((t) => <span className="chip" key={t}>{t}</span>)}
       </div>
+      </div>
     </aside>
   )
 }
@@ -44,7 +52,7 @@ export default function Hero() {
     <section className="hero" aria-label="Introduction">
       <div className="lede">
         <span className="eyebrow">{profile.tagline}</span>
-        <h1>{headline.before}<em>{headline.em}</em>{headline.after}</h1>
+        <h1>{headline.before}<RotatingWord words={headline.words} /><br />{headline.after}</h1>
         <p className="intro">{profile.intro}</p>
         <div className="cta">
           <a className="btn primary" href="#projects">View projects</a>

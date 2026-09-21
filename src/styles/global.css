@@ -78,10 +78,11 @@ p { margin: 0; }
 
 /* ---------- motion ---------- */
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes rise-t { from { opacity: 0; translate: 0 22px; } to { opacity: 1; translate: 0 0; } }
 @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); } 60% { box-shadow: 0 0 0 8px transparent; } }
 .hero .lede > * { animation: rise .7s cubic-bezier(.2,.8,.2,1) both; }
 .hero .lede > :nth-child(1) { animation-delay: .05s; } .hero .lede > :nth-child(2) { animation-delay: .12s; } .hero .lede > :nth-child(3) { animation-delay: .2s; } .hero .lede > :nth-child(4) { animation-delay: .28s; } .hero .lede > :nth-child(5) { animation-delay: .36s; }
-.hero .id-card { animation: rise .8s cubic-bezier(.2,.8,.2,1) .25s both; }
+.hero .id-card { animation: rise-t .8s cubic-bezier(.2,.8,.2,1) .25s both; }
 .top { animation: rise .6s cubic-bezier(.2,.8,.2,1) both; }
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1); transition-delay: var(--reveal-delay, 0ms); }
 .reveal.reveal-in { opacity: 1; transform: none; }
@@ -112,6 +113,15 @@ p { margin: 0; }
 .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(24px, 4vw, 56px); align-items: center; padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 64px); }
 .lede { display: grid; gap: 22px; }
 .hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero h1 em.rotating { display: inline-block; position: relative; white-space: nowrap; text-align: left; vertical-align: top; transition: width .45s cubic-bezier(.2,.8,.2,1);
+  /* solid colour, not background-clip:text — the animated letter spans paint on their own layers and a clipped gradient never reaches them */
+  background: none; -webkit-background-clip: border-box; background-clip: border-box; color: var(--accent); -webkit-text-fill-color: var(--accent); }
+.hero h1 .rw-sizer { position: absolute; left: 0; top: 0; visibility: hidden; pointer-events: none; padding-right: .14em; }
+.hero h1 .rw-ch { display: inline-block; animation: ch-in .16s ease-out both; }
+@keyframes ch-in { from { opacity: 0; transform: translateY(.12em); } to { opacity: 1; transform: none; } }
+.hero h1 .caret { display: inline-block; width: .07em; height: .82em; margin-left: .06em; vertical-align: -.04em; border-radius: 1px; background: var(--accent); opacity: 1; }
+.hero h1 em.rotating.hold .caret, .hero h1 em.rotating.pause .caret { animation: blink 1.05s steps(1, end) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
 .hero p.intro { font-size: 1.1rem; max-width: 54ch; color: var(--muted); }
 .cta { display: flex; gap: 12px; flex-wrap: wrap; }
 .socials { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -119,7 +129,38 @@ p { margin: 0; }
 .socials a:hover { color: var(--text); transform: translateY(-1px); }
 .socials svg { width: 16px; height: 16px; fill: currentColor; }
 
-.id-card { padding: 22px; display: grid; gap: 18px; }
+/* ---- 3D profile card ----
+   The card is a stack of layers in a preserve-3d context:
+   edge (slab behind, gives thickness) → face (the glass surface) → content, whose parts float at
+   different Z heights so they separate when the card tilts. The face carries the backdrop-filter,
+   which is why it is its own layer: backdrop-filter flattens 3D children. */
+.id-card {
+  position: relative;
+  /* resting 3D angle; useTilt overrides the vars while the pointer is over the card */
+  --tilt-x: 6deg; --tilt-y: -10deg;
+  transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transform-origin: center;
+  transition: transform .55s cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+}
+.id-card.is-tilting { transition: transform .09s linear; }
+.id-card-edge { position: absolute; inset: 10px -6px -12px 10px; border-radius: var(--r); transform: translateZ(-22px);
+  background: color-mix(in srgb, var(--ground) 60%, #000); opacity: .9; box-shadow: 0 30px 60px rgba(0,0,0,.45); }
+.id-card-face { position: absolute; inset: 0; transform: translateZ(0); overflow: hidden; }
+.id-card-face::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .35s;
+  background: radial-gradient(380px circle at var(--glare-x, 30%) var(--glare-y, 20%), rgba(255,255,255,.2), transparent 60%); }
+.id-card.is-tilting .id-card-face::after { opacity: 1; }
+.id-card-content { position: relative; padding: 22px; display: grid; gap: 18px; transform-style: preserve-3d; }
+.id-card-content > * { transition: transform .55s cubic-bezier(.2,.8,.2,1); }
+.id-card.is-tilting .id-card-content > * { transition: transform .09s linear; }
+.id-card-content .id-head { transform: translateZ(46px); }
+.id-card-content .code { transform: translateZ(28px); box-shadow: var(--sh-in), 0 24px 40px -18px rgba(0,0,0,.55); }
+.id-card-content .tools { transform: translateZ(56px); }
+.id-card-content .tools .chip { box-shadow: var(--sh-out-sm), 0 10px 18px -8px rgba(0,0,0,.5); }
+.id-card-content .avatar { box-shadow: var(--sh-out-sm), 0 14px 24px -8px rgba(0,0,0,.55); }
+/* flat looks don't want a slab */
+[data-style="minimal"] .id-card-edge, [data-style="brutal"] .id-card-edge, [data-style="bento"] .id-card-edge { display: none; }
 .id-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .id-head > div { min-width: 0; }
 .id-head .pill { flex-shrink: 0; }
@@ -322,7 +363,7 @@ footer code { font-family: var(--font-mono); font-size: .78rem; color: var(--tex
 /* maximalism */
 [data-style="maximal"] .project:nth-child(2), [data-style="maximal"] .skill-card:nth-child(3n+2), [data-style="maximal"] .links a:nth-child(2), [data-style="maximal"] .edu .panel:nth-child(2) { background: var(--pop-1); }
 [data-style="maximal"] .project:nth-child(3), [data-style="maximal"] .skill-card:nth-child(3n), [data-style="maximal"] .links a:nth-child(3), [data-style="maximal"] .about .panel:nth-child(2) { background: var(--pop-2); }
-[data-style="maximal"] .id-card { background: var(--pop-3); }
+[data-style="maximal"] .id-card-face { background: var(--pop-3); }
 [data-style="maximal"] .hero h1 em { background: none; color: var(--accent); -webkit-text-stroke: 2px var(--panel-border); text-shadow: 4px 4px 0 var(--accent-2); }
 [data-style="maximal"] .nav a { color: var(--text); }
 [data-style="maximal"] .project:hover { transform: translate(-3px, -3px) rotate(-.6deg); box-shadow: 15px 15px 0 var(--accent); }
@@ -381,8 +422,7 @@ footer code { font-family: var(--font-mono); font-size: .78rem; color: var(--tex
 
 /* spatial */
 [data-style="spatial"] .hero { perspective: 1400px; }
-[data-style="spatial"] .id-card { transform: rotateY(-8deg); transform-origin: left center; }
-[data-style="spatial"] .id-card:hover { transform: rotateY(-3deg) translateY(-4px); }
+[data-style="spatial"] .id-card { --tilt-x: 3deg; --tilt-y: -13deg; }
 [data-style="spatial"] .project:hover { transform: translateY(-8px) scale(1.015); box-shadow: 0 60px 120px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.45); }
 [data-style="spatial"] .top .bar { border-radius: 999px; padding-left: 22px; }
 [data-style="spatial"] .hero h1 em { background: linear-gradient(90deg, var(--text), var(--accent-2)); -webkit-background-clip: text; background-clip: text; }
@@ -398,7 +438,7 @@ footer code { font-family: var(--font-mono); font-size: .78rem; color: var(--tex
   .takeover-actions { grid-column: 1 / -1; justify-content: flex-start; }
   .work { grid-template-columns: repeat(2, 1fr); }
   .scale { grid-template-columns: repeat(2, 1fr); }
-  [data-style="spatial"] .id-card { transform: none; }
+  .id-card, [data-style="spatial"] .id-card { --tilt-x: 0deg; --tilt-y: 0deg; }
 }
 @media (max-width: 760px) {
   .work { grid-template-columns: 1fr; }

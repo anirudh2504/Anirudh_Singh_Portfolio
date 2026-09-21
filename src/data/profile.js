@@ -7,7 +7,12 @@ export const profile = {
   initials: 'AS',
   role: 'Full Stack Developer',
   tagline: 'Full Stack Developer · MERN Stack · Java',
-  headline: { before: 'I build ', em: 'scalable', after: ' web products, end to end.' },
+  // The highlighted word cycles through `words` (typewriter).
+  headline: {
+    before: 'I build ',
+    words: ['scalable', 'robust', 'reliable', 'end-to-end', 'production-ready', 'maintainable'],
+    after: ' web products.',
+  },
   intro:
     'Full Stack Developer delivering production-grade web applications with the MERN stack and Java — component-driven React front-ends, RESTful APIs, database modelling, and integrations like Shopify and AWS Lambda. I use AI-assisted tooling (Claude, GitHub Copilot) to ship faster and cleaner.',
   education_short: 'B.Tech CSE · GJUS&T',

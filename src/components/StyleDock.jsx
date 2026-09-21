@@ -34,7 +34,7 @@ export default function StyleDock() {
         </div>
         <div className="styles-grid" role="group" aria-label="UI style">
           {STYLES.map((s) => (
-            <button type="button" className="style-btn" key={s.id} aria-pressed={style === s.id} onClick={() => setStyle(s.id)}>
+            <button type="button" className="style-btn" key={s.id} aria-pressed={style === s.id} onClick={() => { setStyle(s.id); setOpen(false) }}>
               <span className={`sw sw-${s.id}`} />{s.name}
             </button>
           ))}
