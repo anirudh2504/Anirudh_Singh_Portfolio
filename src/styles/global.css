@@ -222,6 +222,10 @@ section { padding-block: clamp(36px, 6vw, 72px); scroll-margin-top: 90px; }
 .range { display: inline-flex; align-items: center; gap: 8px; font: 600 .78rem var(--font-mono); color: var(--muted); letter-spacing: .02em; white-space: nowrap; }
 .range time { padding: 4px 9px; border-radius: calc(var(--r-sm) * .5); background: var(--chip); border: var(--bw) solid var(--panel-border); color: var(--text); }
 .range time.now { color: var(--accent-ink); background: var(--accent); border-color: transparent; }
+.duration { display: inline-flex; align-items: baseline; gap: 6px; flex-wrap: wrap; font: 500 .8rem var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.duration b { font-weight: 700; color: var(--text); padding: 2px 7px; border-radius: 6px; background: var(--chip); border: var(--bw) solid var(--panel-border); }
+.duration-suffix { font-size: .72rem; letter-spacing: .04em; }
+.fact .duration { justify-content: flex-end; }
 .range i { position: relative; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; flex: 0 0 auto; }
 .range i::after { content: ""; position: absolute; right: -2px; top: -4px; border: 5px solid transparent; border-left: 6px solid var(--muted); border-right: 0; }
 .xp .role { display: grid; gap: 12px; }
@@ -516,6 +520,7 @@ footer code { font-family: var(--font-mono); font-size: .78rem; color: var(--tex
   .about .panel { padding: 20px; }
   .fact { flex-direction: column; gap: 2px; }
   .fact span:last-child { text-align: left; }
+  .fact .duration { justify-content: flex-start; }
   .ledger-head h3 { font-size: 1.15rem; }
 
   /* experience */

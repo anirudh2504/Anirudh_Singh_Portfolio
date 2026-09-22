@@ -1,6 +1,7 @@
 import { experience } from '../../data/profile'
 import SectionHead from '../ui/SectionHead'
 import Tags from '../ui/Tags'
+import Duration from '../ui/Duration'
 
 // "from → to" date range, e.g. Jul 2025 → Present
 const Range = ({ from, to }) => (
@@ -20,6 +21,7 @@ export default function Experience() {
           <article className="xp panel" key={`${item.org}-${item.from}`}>
             <div className="when">
               <Range from={item.from} to={item.to} />
+              {item.to === 'Present' && item.start && <Duration start={item.start} />}
               <b>{item.org}</b>
               <span className="pill">{item.type}</span>
             </div>

@@ -1,4 +1,5 @@
-import { about, profile, skills } from '../../data/profile'
+import { about, experience, profile, skills } from '../../data/profile'
+import Duration from '../ui/Duration'
 import SectionHead from '../ui/SectionHead'
 
 const allSkills = skills.flatMap((g) => g.items)
@@ -16,6 +17,7 @@ export default function About() {
             {about.facts.map(([k, v]) => (
               <div className="fact" key={k}><span>{k}</span><span>{v}</span></div>
             ))}
+            <div className="fact"><span>In current role</span><span><Duration start={experience[0].start} suffix="" /></span></div>
             <div className="fact"><span>Email</span><span><a href={profile.mailto}>{profile.email}</a></span></div>
             <div className="fact"><span>Phone</span><span><a href={profile.phone.href}>{profile.phone.display}</a></span></div>
           </div>

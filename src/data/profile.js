@@ -59,6 +59,7 @@ export const experience = [
     org: 'Affluence Digital Solutions',
     from: 'Jul 2025',
     to: 'Present',
+    start: '2025-07-01', // exact first day — drives the live years/months/days counter
     type: 'Full-time',
     bullets: [
       'Develop and maintain scalable full-stack features for the Ribbon B2B e-commerce platform using React.js, Node.js, Express.js and MongoDB with a modular, reusable architecture.',
