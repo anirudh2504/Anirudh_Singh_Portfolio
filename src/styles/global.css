@@ -214,24 +214,38 @@ section { padding-block: clamp(36px, 6vw, 72px); scroll-margin-top: 90px; }
 .xp li { padding-left: 20px; position: relative; }
 .xp li::before { content: ""; position: absolute; left: 0; top: .62em; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
 
-/* projects — compact cards, details in a dialog */
-.work { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.project { display: grid; grid-template-rows: 1fr auto; padding: 0; overflow: hidden; }
-.project.reveal-in:hover, .project:not(.reveal):hover { transform: translateY(-4px); }
-.project-open { appearance: none; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; display: grid; gap: 10px; align-content: start; padding: 22px 22px 16px; width: 100%; border-radius: inherit; }
-.project-open:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
-.project-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
-.project h3 { font-size: 1.25rem; }
-.project .subtitle { color: var(--muted); font-size: .9rem; margin-top: -4px; }
-.project .tagline { color: var(--muted); font-size: .95rem; line-height: 1.55; }
-.project .tags { margin-top: 4px; }
+/* projects — pinned horizontal scroller */
+.projects-stage { height: calc(var(--n, 3) * 100vh); padding-block: 0; scroll-margin-top: 0; position: relative; }
+.projects-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-rows: auto 1fr; padding-top: 96px; padding-bottom: 24px; }
+.projects-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+.projects-head .sec-head { margin-bottom: 0; }
+.projects-meta { display: grid; justify-items: end; gap: 8px; padding-bottom: 6px; }
+.projects-meta .counter { font: 500 .9rem var(--font-mono); color: var(--muted); }
+.projects-meta .counter b { color: var(--text); font-weight: 700; }
+.projects-meta .progress { width: 160px; height: 3px; border-radius: 2px; background: var(--line); overflow: hidden; display: block; }
+.projects-meta .progress i { display: block; height: 100%; width: 100%; transform-origin: left; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: transform .12s linear; }
+.projects-meta .hint { font: 500 .7rem var(--font-mono); color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+.projects-track { display: flex; width: calc(var(--n, 3) * 100%); height: 100%; will-change: transform; }
+.slide { width: calc(100% / var(--n, 3)); flex: 0 0 auto; display: grid; place-items: center; padding: 24px clamp(16px, 4vw, 40px); }
+.slide-card { width: min(820px, 100%); padding: clamp(24px, 4vw, 44px); display: grid; gap: 20px;
+  /* settle in/out as the slide approaches the centre: --p is the eased progress, --i this slide's index */
+  --d: min(1, max(0, calc(abs(var(--p, 0) - var(--i, 0)))));
+  transform: scale(calc(1 - .06 * var(--d))); opacity: calc(1 - .45 * var(--d)); }
+.slide-card { cursor: pointer; transition: box-shadow .4s ease, background .4s ease, border-color .4s ease, transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s; }
+.slide-card:hover { border-color: var(--accent); }
+.slide-card:hover .monogram { transform: rotate(-6deg) scale(1.06); }
+.slide-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.slide-card .tag { pointer-events: none; }
+.slide-top { display: flex; align-items: center; gap: 18px; }
+.slide-titles { display: grid; gap: 2px; min-width: 0; }
+.slide-card h3 { font-size: clamp(1.6rem, 3.2vw, 2.4rem); }
+.slide-card .subtitle { color: var(--muted); font-size: .95rem; }
+.slide-card .tagline { color: var(--text); font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.6; max-width: 60ch; }
+.slide-foot { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
 .kind { font: 500 .7rem var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-.project-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 22px 16px; border-top: 1px solid var(--line); }
-.p-link { appearance: none; border: 0; background: transparent; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font: 700 .82rem var(--font-body); color: var(--accent); padding: 0; }
-.p-link.ext { font: 600 .78rem var(--font-mono); color: var(--muted); }
-.p-link.ext:hover { color: var(--text); }
-.p-link svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s; }
-.p-link:hover svg { transform: translate(2px, -2px); }
+/* the old grid classes still used by other styles' overrides */
+.work { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.project { display: grid; }
 
 /* monogram tile — one per project, coloured by hue */
 .monogram { width: 48px; height: 48px; border-radius: calc(var(--r-sm) * .8); display: grid; place-items: center; font: 800 1.05rem var(--font-display); letter-spacing: -.02em; color: #fff; flex: 0 0 auto; box-shadow: var(--sh-out-sm); }
@@ -415,8 +429,8 @@ footer code { font-family: var(--font-mono); font-size: .78rem; color: var(--tex
 [data-style="bento"] .hero { padding-block: 24px 20px; gap: 16px; }
 [data-style="bento"] .lede { padding: 32px; background: var(--panel); border: var(--bw) solid var(--panel-border); border-radius: var(--r); box-shadow: var(--sh-out); }
 [data-style="bento"] .sec-head { margin-bottom: 16px; }
-[data-style="bento"] .work, [data-style="bento"] .about, [data-style="bento"] .edu, [data-style="bento"] .contact { gap: 16px; }
-[data-style="bento"] .project:hover, [data-style="bento"] .links a:hover { transform: none; border-color: var(--accent); }
+[data-style="bento"] .about, [data-style="bento"] .edu, [data-style="bento"] .contact { gap: 16px; }
+[data-style="bento"] .links a:hover { transform: none; border-color: var(--accent); }
 [data-style="bento"] footer { margin-top: 12px; }
 [data-style="bento"] .hero h1 { font-size: clamp(2rem, 4.6vw, 3.4rem); }
 
@@ -436,9 +450,17 @@ footer code { font-family: var(--font-mono); font-size: .78rem; color: var(--tex
   .takeover-grid { grid-template-columns: 1fr; }
   .takeover-head { grid-template-columns: auto 1fr; }
   .takeover-actions { grid-column: 1 / -1; justify-content: flex-start; }
-  .work { grid-template-columns: repeat(2, 1fr); }
   .scale { grid-template-columns: repeat(2, 1fr); }
   .id-card, [data-style="spatial"] .id-card { --tilt-x: 0deg; --tilt-y: 0deg; }
+}
+@media (max-width: 760px), (prefers-reduced-motion: reduce) {
+  .projects-stage { height: auto; padding-block: clamp(36px, 6vw, 72px); scroll-margin-top: 90px; }
+  .projects-sticky { position: static; height: auto; overflow: visible; padding-top: 0; padding-bottom: 0; display: grid; gap: 20px; }
+  .projects-head { align-items: flex-start; }
+  .projects-meta { display: none; }
+  .projects-track { display: grid; width: auto; height: auto; gap: 16px; transform: none !important; padding-inline: clamp(16px, 4vw, 40px); max-width: 1120px; margin-inline: auto; box-sizing: content-box; }
+  .slide { width: auto; padding: 0; display: block; }
+  .slide-card { transform: none; opacity: 1; width: 100%; }
 }
 @media (max-width: 760px) {
   .work { grid-template-columns: 1fr; }

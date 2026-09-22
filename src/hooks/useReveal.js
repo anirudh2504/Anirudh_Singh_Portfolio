@@ -9,7 +9,7 @@ export function useReveal() {
     if (!('IntersectionObserver' in window)) return undefined
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
 
-    const els = Array.from(document.querySelectorAll(SELECTOR))
+    const els = Array.from(document.querySelectorAll(SELECTOR)).filter((el) => !el.closest('[data-no-reveal]'))
     // Stagger siblings inside the same parent.
     const seen = new Map()
     els.forEach((el) => {
