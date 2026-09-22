@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const SELECTOR = 'section .sec-head, section .panel, .links a, .skill-card'
+const SELECTOR = 'section .sec-head, section .panel, .links a, .ledger-row'
 
 // Scroll-reveal: elements start visible (so nothing is hidden if JS fails or motion is reduced);
 // only when IntersectionObserver is available do we hide them and fade/slide them in as they enter.

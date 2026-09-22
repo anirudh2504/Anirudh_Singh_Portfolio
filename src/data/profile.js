@@ -68,7 +68,7 @@ export const experience = [
       'Use Claude and AI-assisted tooling for code generation, refactoring, test scaffolding and documentation.',
       'Collaborate in an Agile/Scrum team using Git and GitHub for version control, pull requests and code reviews.',
     ],
-    tags: ['React', 'Node.js', 'Express', 'MongoDB', 'GraphQL', 'AWS Lambda', 'Shopify', 'Claude'],
+    tags: ['React', 'Node.js', 'Express', 'MongoDB', 'AWS Lambda', 'Shopify', 'Claude'],
   },
   {
     title: 'Full Stack Web Development Training',
@@ -193,14 +193,15 @@ export const projects = [
   },
 ]
 
+// Concrete technologies only — things that appear in the work and projects above.
 export const skills = [
-  { icon: '{ }', title: 'Languages', items: ['Java', 'JavaScript (ES6+)', 'HTML5', 'CSS3', 'SQL'] },
-  { icon: 'UI', title: 'Front-end', items: ['React.js', 'React Hooks', 'Responsive Design', 'Component Architecture', 'State Management'] },
-  { icon: 'API', title: 'Back-end', items: ['Node.js', 'Express.js', 'RESTful APIs', 'GraphQL (Shopify)', 'Serverless Functions', 'Authentication'] },
-  { icon: 'DB', title: 'Databases', items: ['MongoDB', 'MySQL', 'Mongoose', 'Schema Design', 'Query Optimization'] },
-  { icon: 'λ', title: 'Cloud & integrations', items: ['AWS Lambda', 'Serverless Architecture', 'Shopify Integration', 'Vercel Deployment'] },
-  { icon: 'AI', title: 'AI & productivity', items: ['Claude (Anthropic)', 'Claude Code', 'GitHub Copilot', 'ChatGPT', 'AI-assisted Development'] },
-  { icon: '>_', title: 'Tools & practices', items: ['Git', 'GitHub', 'Postman', 'VS Code', 'npm', 'Agile/Scrum', 'Code Reviews', 'Debugging'] },
+  { title: 'Languages', items: ['JavaScript (ES6+)', 'Java', 'SQL', 'HTML5', 'CSS3'] },
+  { title: 'Front-end', items: ['React.js', 'React Hooks', 'Vite'] },
+  { title: 'Back-end', items: ['Node.js', 'Express.js', 'REST APIs', 'GraphQL (Shopify)', 'JWT auth'] },
+  { title: 'Databases', items: ['MongoDB', 'Mongoose', 'MySQL', 'JDBC'] },
+  { title: 'Cloud & integrations', items: ['AWS Lambda', 'Shopify API', 'Vercel'] },
+  { title: 'AI tooling', items: ['Claude', 'Claude Code', 'GitHub Copilot'] },
+  { title: 'Tools', items: ['Git', 'GitHub', 'Postman', 'VS Code', 'npm'] },
 ]
 
 export const education = [

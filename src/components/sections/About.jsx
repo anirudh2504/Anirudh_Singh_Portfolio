@@ -1,6 +1,7 @@
 import { about, profile, skills } from '../../data/profile'
 import SectionHead from '../ui/SectionHead'
-import Tags from '../ui/Tags'
+
+const allSkills = skills.flatMap((g) => g.items)
 
 export default function About() {
   return (
@@ -20,22 +21,27 @@ export default function About() {
           </div>
         </div>
 
-        <div className="panel about-skills" id="skills">
-          <div className="about-skills-head">
+        <div className="skills-ledger" id="skills">
+          <div className="ledger-head">
             <h3>Skills</h3>
             <p className="muted">What I use day to day, grouped by where it sits in the stack.</p>
           </div>
-          <div className="skill-grid">
-            {skills.map((group) => (
-              <div className="skill-card well" key={group.title}>
-                <div className="skill-card-head">
-                  <span className="icon">{group.icon}</span>
-                  <h4>{group.title}</h4>
-                </div>
-                <Tags items={group.items} />
-              </div>
-            ))}
+          <div className="ticker" aria-hidden="true">
+            <div className="ticker-track">
+              {[...allSkills, ...allSkills].map((item, i) => <span key={`${item}-${i}`}>{item}</span>)}
+            </div>
           </div>
+          <ol className="ledger">
+            {skills.map((group, i) => (
+              <li className="ledger-row" key={group.title}>
+                <span className="ledger-idx">{String(i + 1).padStart(2, '0')}</span>
+                <span className="ledger-label">{group.title}</span>
+                <span className="ledger-items">
+                  {group.items.map((item) => <span className="skill-item" key={item}>{item}</span>)}
+                </span>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>
