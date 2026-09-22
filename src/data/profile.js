@@ -196,7 +196,7 @@ export const projects = [
 
 // Concrete technologies only — things that appear in the work and projects above.
 export const skills = [
-  { title: 'Languages', items: ['JavaScript (ES6+)', 'Java', 'SQL', 'HTML5', 'CSS3'] },
+  { title: 'Languages', items: ['JavaScript (ES6+)', 'Java','HTML5', 'CSS3'] },
   { title: 'Front-end', items: ['React.js', 'React Hooks', 'Vite'] },
   { title: 'Back-end', items: ['Node.js', 'Express.js', 'REST APIs', 'GraphQL (Shopify)', 'JWT auth'] },
   { title: 'Databases', items: ['MongoDB', 'Mongoose', 'MySQL', 'JDBC'] },
