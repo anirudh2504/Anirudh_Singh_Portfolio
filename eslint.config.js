@@ -24,4 +24,6 @@ export default [
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
+  // Server-side code: Vercel functions + the Vite config run on Node, not in the browser.
+  { files: ['api/**/*.js', 'vite.config.js'], languageOptions: { globals: { ...globals.node } } },
 ]

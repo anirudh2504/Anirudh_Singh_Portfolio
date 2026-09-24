@@ -8,6 +8,7 @@ import Education from './components/sections/Education'
 import Contact from './components/sections/Contact'
 import Footer from './components/Footer'
 import StyleDock from './components/StyleDock'
+import ChatWidget from './components/ChatWidget'
 import { useReveal } from './hooks/useReveal'
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
         <Contact />
         <Footer />
       </main>
+      <ChatWidget />
       <StyleDock />
     </>
   )

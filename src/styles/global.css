@@ -362,6 +362,98 @@ footer code { font-family: var(--font-mono); font-size: .78rem; color: var(--tex
 .sw-spatial { background: radial-gradient(at 50% 0, #3a3f7a, #0a0c1a 70%); } .sw-spatial::after { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.4); }
 .dock-note { font: 500 .74rem/1.5 var(--font-mono); color: var(--muted); }
 
+/* ---------- chat widget (AI assistant) ---------- */
+.chat { position: fixed; right: 18px; bottom: 76px; z-index: 39; display: grid; justify-items: end; gap: 12px; }
+
+/* ---------- robot launcher ---------- */
+.robot-dock { position: relative; display: flex; align-items: center; gap: 10px; }
+.robot-btn { appearance: none; border: 0; background: none; padding: 0; cursor: pointer; border-radius: 24px; -webkit-tap-highlight-color: transparent; }
+.robot-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.robot { --eye: var(--accent); --eye-deep: var(--accent); position: relative; display: grid; justify-items: center; width: 90px; }
+.robot-float { display: block; width: 100%; animation: robot-float 3.2s ease-in-out infinite; }
+.robot-svg { display: block; width: 100%; height: auto; overflow: visible; transform: perspective(420px) rotateY(0deg); animation: robot-sway 6s ease-in-out infinite; filter: drop-shadow(0 10px 14px rgba(0,0,0,.35)); transition: transform .3s ease; }
+.robot-btn:hover .robot-svg { animation-play-state: paused; transform: perspective(420px) rotateY(-14deg) scale(1.06); }
+.robot-shadow { width: 54px; height: 9px; margin-top: 4px; border-radius: 50%; background: rgba(0,0,0,.35); filter: blur(3px); animation: robot-shadow 3.2s ease-in-out infinite; }
+:root[data-theme="light"] .robot-shadow { background: rgba(20,30,60,.22); }
+
+/* parts */
+.rb-glow-stop { stop-color: var(--eye); }
+.rb-glow-stop--deep { stop-color: var(--eye-deep); stop-opacity: .75; }
+.robot-bulb { transform-box: fill-box; transform-origin: center; animation: robot-bulb 1.8s ease-in-out infinite; }
+.robot-heart { fill: var(--eye); opacity: .9; transform-box: fill-box; transform-origin: center; animation: robot-heart 1.6s ease-in-out infinite; }
+.robot-eye { fill: var(--eye); transform-box: fill-box; transform-origin: center; animation: robot-blink 4.5s infinite; }
+.robot-mouth { stroke: var(--eye); opacity: .8; }
+.robot-arm { transform-box: fill-box; }
+.robot-arm--left { transform-origin: 50% 8%; }
+.robot-arm--right { transform-origin: 50% 8%; }
+.robot-btn:hover .robot-arm--right, .robot--open .robot-arm--right { animation: robot-wave .9s ease-in-out infinite; }
+
+/* moods */
+.robot--open .robot-eye { animation: none; transform: scaleY(.45); }
+.robot--busy .robot-eyes { animation: robot-scan 1s ease-in-out infinite; }
+.robot--busy .robot-eye { animation: none; }
+.robot--offline { --eye: #ff3b4f; --eye-deep: #b3001b; }
+.robot--offline .robot-eye { animation: robot-alarm .7s steps(1, end) infinite; }
+.robot--offline .robot-bulb { animation: robot-alarm .7s steps(1, end) infinite; }
+.robot--offline .robot-heart { animation: robot-alarm .7s steps(1, end) infinite; }
+.robot--offline .robot-mouth { transform-box: fill-box; transform-origin: center; transform: scaleY(-1); }
+.robot--offline .robot-float { animation-duration: 5s; }
+
+/* speech bubble to the left of the robot */
+.robot-bubble { position: absolute; right: calc(100% + 6px); bottom: 58%; white-space: nowrap; padding: 8px 12px; border-radius: 14px 14px 4px 14px; background: var(--panel); border: var(--bw) solid var(--panel-border); color: var(--text); box-shadow: var(--sh-out-sm); backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur)); font: 700 .8rem var(--font-body); animation: rise .3s cubic-bezier(.2,.8,.2,1) both; pointer-events: none; }
+.robot-bubble--alert { background: #2a0a10; border-color: #ff3b4f; color: #ff5a6b; font: 700 .74rem var(--font-mono); letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 0 0 1px rgba(255,59,79,.35), 0 0 18px rgba(255,59,79,.45); animation: rise .3s cubic-bezier(.2,.8,.2,1) both, robot-bubble-flash 1.4s ease-in-out infinite .3s; }
+:root[data-theme="light"] .robot-bubble--alert { background: #fff1f2; color: #d0112b; border-color: #e11d48; }
+
+@keyframes robot-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@keyframes robot-shadow { 0%, 100% { transform: scaleX(1); opacity: .9; } 50% { transform: scaleX(.72); opacity: .5; } }
+@keyframes robot-sway { 0%, 100% { transform: perspective(420px) rotateY(-12deg) rotateZ(-2deg); } 50% { transform: perspective(420px) rotateY(12deg) rotateZ(2deg); } }
+@keyframes robot-blink { 0%, 44%, 50%, 92%, 100% { transform: scaleY(1); } 47%, 95% { transform: scaleY(.1); } }
+@keyframes robot-bulb { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.18); filter: brightness(1.35); } }
+@keyframes robot-heart { 0%, 100% { transform: scale(1); } 20% { transform: scale(1.25); } 40% { transform: scale(1); } }
+@keyframes robot-wave { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-28deg); } }
+@keyframes robot-scan { 0%, 100% { transform: translateX(-5px); } 50% { transform: translateX(5px); } }
+@keyframes robot-alarm { 0% { opacity: 1; } 50% { opacity: .15; } }
+@keyframes robot-bubble-flash { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+.chat-panel { width: min(380px, calc(100vw - 40px)); height: min(600px, calc(100vh - 150px)); display: grid; grid-template-rows: auto 1fr auto auto; overflow: hidden;
+  /* grows out of / shrinks back into the robot sitting just below the panel's right edge */
+  --robot-origin: calc(100% - 45px) calc(100% + 60px);
+  transform-origin: var(--robot-origin); animation: chat-in .34s cubic-bezier(.2,.9,.3,1.15) both; }
+.chat-panel.is-closing { animation: chat-out .28s cubic-bezier(.55,0,.8,.2) both; pointer-events: none; }
+.robot-btn.is-gulping .robot { animation: robot-gulp .45s cubic-bezier(.3,1.6,.5,1) both; }
+@keyframes chat-in { from { opacity: 0; transform: scale(.06); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes chat-out { from { opacity: 1; transform: none; filter: none; } to { opacity: 0; transform: scale(.04); filter: blur(4px); } }
+@keyframes robot-gulp { 0% { transform: scale(1); } 35% { transform: scale(1.18, .86); } 65% { transform: scale(.94, 1.08); } 100% { transform: scale(1); } }
+.chat-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; border-bottom: var(--bw) solid var(--line); }
+.chat-head h3 { font-size: .95rem; }
+.chat-head .sub { display: block; font: 500 .7rem/1.4 var(--font-mono); color: var(--muted); }
+.chat-head .sub--offline { color: #ff5a6b; }
+:root[data-theme="light"] .chat-head .sub--offline { color: #d0112b; }
+.chat-head-actions { display: flex; gap: 6px; }
+.chat-head .icon-btn { width: 34px; height: 34px; }
+.chat-head .icon-btn svg { width: 16px; height: 16px; }
+.chat-log { overflow-y: auto; overscroll-behavior: contain; padding: 14px 16px; display: grid; gap: 10px; align-content: start; }
+.msg { max-width: 88%; padding: 10px 13px; border-radius: var(--r-sm); font-size: .88rem; line-height: 1.5; overflow-wrap: anywhere; }
+.msg p { margin: 0; } .msg p + p, .msg p + ul, .msg ul + p { margin-top: 6px; }
+.msg ul { margin: 0; padding-left: 18px; } .msg li + li { margin-top: 3px; }
+.msg.user { justify-self: end; background: var(--accent); color: var(--accent-ink); border-bottom-right-radius: 4px; }
+.msg.bot { justify-self: start; background: var(--chip); border: var(--bw) solid var(--panel-border); border-bottom-left-radius: 4px; }
+.msg.bot.error { border-color: var(--accent-2); color: var(--accent-2); }
+.msg.typing { display: flex; gap: 4px; padding: 12px 14px; }
+.msg.typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: blink 1.2s infinite ease-in-out; }
+.msg.typing span:nth-child(2) { animation-delay: .2s; } .msg.typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-2px); } }
+.chat-sugg { display: flex; flex-wrap: wrap; gap: 6px; }
+.chat-sugg button { appearance: none; cursor: pointer; border: var(--bw) solid var(--panel-border); background: var(--chip); color: var(--text); border-radius: var(--r-pill); padding: 7px 12px; font: 600 .76rem var(--font-body); text-align: left; transition: border-color .2s, transform .15s; }
+.chat-sugg button:hover { border-color: var(--accent); transform: translateY(-1px); }
+.chat-form { display: flex; gap: 8px; padding: 12px 12px 8px; border-top: var(--bw) solid var(--line); }
+.chat-form input { flex: 1; min-width: 0; appearance: none; border: var(--bw) solid var(--panel-border); background: var(--chip); color: var(--text); border-radius: var(--r-pill); padding: 10px 14px; font: 500 .9rem var(--font-body); box-shadow: var(--sh-in-sm); }
+.chat-form input::placeholder { color: var(--muted); }
+.chat-form input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.chat-form input:disabled { opacity: .7; }
+.chat-send { width: 42px; height: 42px; padding: 0; justify-content: center; flex: 0 0 auto; }
+.chat-send:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.chat-foot { margin: 0; padding: 0 16px 10px; font: 500 .68rem/1.4 var(--font-mono); color: var(--muted); }
+
 /* =====================================================================
    STRUCTURAL OVERRIDES — where tokens can't express the style
    ===================================================================== */
@@ -506,6 +598,13 @@ footer code { font-family: var(--font-mono); font-size: .78rem; color: var(--tex
   .style-btn { padding: 7px 8px; font-size: .76rem; gap: 8px; }
   .style-btn .sw { width: 28px; height: 20px; }
   .dock-note { display: none; }
+
+  /* chat → round icon button above the dock, full-width sheet */
+  .chat { right: 14px; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); left: 14px; justify-items: end; gap: 10px; }
+  .robot { width: 58px; }
+  .robot-shadow { width: 36px; height: 6px; }
+  .robot-bubble { font-size: .72rem; padding: 7px 10px; }
+  .chat-panel { width: 100%; height: min(72vh, 560px); --robot-origin: calc(100% - 29px) calc(100% + 45px); }
 
   /* hero */
   .hero { padding-block: 28px 32px; gap: 24px; }
